@@ -1,11 +1,9 @@
 package com.example.contactlist.data.model
 
-class Contact (
+// have to be a data class for .copy() function
+data class Contact (
     val id: Int? = null,
     val name: String,
     val phone: String
     ) {
-    fun copy(id: Int): Contact {
-        return Contact(id, name, phone)
-    }
 }
