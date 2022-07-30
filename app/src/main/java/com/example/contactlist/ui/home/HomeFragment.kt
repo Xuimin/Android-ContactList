@@ -1,6 +1,7 @@
 package com.example.contactlist.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.example.contactlist.ui.ContactAdapter
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
+    lateinit var contactAdapter: ContactAdapter
     private val viewModel: HomeViewModel by viewModels {
         HomeViewModel.Provider(ContactRepository.contactRepository)
     }
@@ -28,6 +30,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -35,6 +38,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
 
+        setUpAdapter()
         onBindView()
         setUpFragmentListener()
 
@@ -50,7 +54,7 @@ class HomeFragment : Fragment() {
 
         // recycleView
         viewModel.contacts.observe(viewLifecycleOwner) { contacts ->
-            setUpAdapter(contacts)
+            contactAdapter.setModels(contacts)
         }
 
         // fab
@@ -60,11 +64,15 @@ class HomeFragment : Fragment() {
     }
 
     // recycleView
-    fun setUpAdapter(contacts: List<Contact>) {
-        val contactAdapter = ContactAdapter(contacts)
+    fun setUpAdapter() {
+        contactAdapter = ContactAdapter(emptyList())
         contactAdapter.listener = object: ContactAdapter.Listener {
             override fun onItemClicked(item: Contact) {
                 navigateToEditContact(item.id!!)
+            }
+
+            override fun onDeleteClicked(item: Contact) {
+                viewModel.onDeleteClicked(item.id!!)
             }
         }
         val layoutManager = LinearLayoutManager(requireContext())
