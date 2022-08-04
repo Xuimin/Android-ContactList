@@ -8,19 +8,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
-import com.example.contactlist.data.model.Contact
-import com.example.contactlist.data.repository.ContactRepository
 import com.example.contactlist.ui.contact.base.BaseContactFragment
+import com.example.contactlist.ui.contact.edit.viewmodel.EditContactViewModelImpl
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditContactFragment: BaseContactFragment() {
-    private val viewModel: EditContactViewModel by viewModels {
-        EditContactViewModel.Provider(ContactRepository.contactRepository)
-    }
+    private val viewModel: EditContactViewModelImpl by viewModels()
     val args: EditContactFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.onViewCreated(args.id)
 
         binding.btnSave.text = "Update"
@@ -28,15 +28,6 @@ class EditContactFragment: BaseContactFragment() {
     }
 
     fun onBindView() {
-//        viewmodel.name.asLivaData(viewLifecycleOwner)
-//        viewModel.name.observe(viewLifecycleOwner) {
-//            binding.etName.setText(it)
-//        }
-//
-//        viewModel.phone.observe(viewLifecycleOwner) {
-//            binding.etPhone.setText(it)
-//        }
-
         binding.btnSave.setOnClickListener {
 //            val contact = Contact(
 //                id = args.id,

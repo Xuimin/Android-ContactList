@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.contactlist.ui.home.HomeViewModel" />
+            type="com.example.contactlist.ui.home.viewmodel.HomeViewModelImpl" />
         <import type="android.view.View" />
     </data>
 
@@ -26,32 +26,38 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/srl_contacts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RelativeLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{viewModel.emptyScreen ? View.VISIBLE : View.GONE}">
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.emptyScreen ? View.VISIBLE : View.GONE}">
 
 
-                    <ImageView
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_contact"
-                        android:layout_gravity="center" />
+                        <ImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_contact"
+                            android:layout_gravity="center" />
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_contacts"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{viewModel.emptyScreen ? View.GONE : View.VISIBLE}"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_contacts"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.emptyScreen ? View.GONE : View.VISIBLE}"/>
 
-            </FrameLayout>
+                </FrameLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

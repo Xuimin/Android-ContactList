@@ -1,29 +1,30 @@
 package com.example.contactlist.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactlist.data.model.Contact
-import com.example.contactlist.data.repository.ContactRepository
 import com.example.contactlist.databinding.FragmentHomeBinding
 import com.example.contactlist.ui.ContactAdapter
+import com.example.contactlist.ui.home.viewmodel.HomeViewModel
+import com.example.contactlist.ui.home.viewmodel.HomeViewModelImpl
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
+//    @Inject
+//    lateinit var greeting: String
+
     lateinit var binding: FragmentHomeBinding
     lateinit var contactAdapter: ContactAdapter
-    private val viewModel: HomeViewModel by viewModels {
-        HomeViewModel.Provider(ContactRepository.contactRepository)
-    }
+    private val viewModel: HomeViewModelImpl by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +43,18 @@ class HomeFragment : Fragment() {
         onBindView()
         setUpFragmentListener()
 
-//        lifecycleScope.launchWhenResumed {
-//            viewModel.onViewCreated()
-//        }
+//        Log.d("Injection", greeting)
     }
 
     fun onBindView() {
+        binding.srlContacts.setOnRefreshListener {
+            viewModel.refresh()
+        }
+
+        viewModel.refreshFinished.asLiveData().observe(viewLifecycleOwner) {
+            binding.srlContacts.isRefreshing = false
+        }
+
 //        viewModel.finish.asLiveData().observe(viewLifecycleOwner) {
 //            Toast.makeText(requireContext(), "Finished", Toast.LENGTH_SHORT).show()
 //        }
