@@ -1,7 +1,6 @@
 package com.example.contactlist.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,18 +12,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactlist.data.model.Contact
 import com.example.contactlist.databinding.FragmentHomeBinding
 import com.example.contactlist.ui.ContactAdapter
-import com.example.contactlist.ui.home.viewmodel.HomeViewModel
+import com.example.contactlist.ui.base.BaseFragment
+import com.example.contactlist.ui.core.ErrorHandler
+import com.example.contactlist.ui.core.ErrorHandlerImpl
 import com.example.contactlist.ui.home.viewmodel.HomeViewModelImpl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment(), ErrorHandler by ErrorHandlerImpl() {
 //    @Inject
 //    lateinit var greeting: String
 
     lateinit var binding: FragmentHomeBinding
     lateinit var contactAdapter: ContactAdapter
-    private val viewModel: HomeViewModelImpl by viewModels()
+    override val viewModel: HomeViewModelImpl by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +43,7 @@ class HomeFragment : Fragment() {
         setUpAdapter()
         onBindView()
         setUpFragmentListener()
+        setUpErrorHandler(view, viewModel, viewLifecycleOwner)
 
 //        Log.d("Injection", greeting)
     }

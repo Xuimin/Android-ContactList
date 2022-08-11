@@ -7,8 +7,9 @@ import kotlinx.coroutines.delay
 class ContactRepositoryImpl (private val dao: ContactDao): ContactRepository {
 
     override suspend fun getContacts(): List<Contact> {
-        delay(1000)
-        return dao.getContacts()
+        throw Exception("Error")
+//        delay(5000)
+//        return dao.getContacts()
     }
 
     override suspend fun addContact(contact: Contact) {
