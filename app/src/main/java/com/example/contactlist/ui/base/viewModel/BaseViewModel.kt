@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.SharedFlow
 abstract class BaseViewModel: ViewModel() {
     open fun onViewCreated() {}
 
+    protected val _loading: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val loading: SharedFlow<Boolean> = _loading
+
     private val _apiError: MutableSharedFlow<String> = MutableSharedFlow()
     val apiError: SharedFlow<String> = _apiError
 

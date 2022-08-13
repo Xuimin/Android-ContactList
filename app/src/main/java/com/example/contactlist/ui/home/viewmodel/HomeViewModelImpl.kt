@@ -42,8 +42,10 @@ class HomeViewModelImpl @Inject constructor(val contactRepository: ContactReposi
 
     private fun getContacts() {
         viewModelScope.launch {
+            _loading.emit(true)
 //            val response = contactRepository.getContacts().sortedBy { it.name.uppercase() }
             val response = safeApiCall2 { contactRepository.getContacts() }
+            _loading.emit(false)
             response?.let {
                 _refreshFinished.emit(Unit)
                 val tempList: MutableList<BaseItem> = mutableListOf()

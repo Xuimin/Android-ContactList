@@ -4,4 +4,29 @@
         <item name="android:padding">8dp</item>
         <item name="android:background">@drawable/bg_input</item>
     </style>
+
+    <style name="loader" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
+    <style name="Text.Regular.Base" parent="">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Text.Regular.ExtraSmall" parent="Text.Regular.Base">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Regular.Small" parent="Text.Regular.Base">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Regular.Medium" parent="Text.Regular.Base">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Regular.Large" parent="Text.Regular.Base">
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

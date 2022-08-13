@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class EditContactFragment: BaseContactFragment() {
-    private val viewModel: EditContactViewModelImpl by viewModels()
+    override val viewModel: EditContactViewModelImpl by viewModels()
     val args: EditContactFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

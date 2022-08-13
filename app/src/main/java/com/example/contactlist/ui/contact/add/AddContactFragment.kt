@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddContactFragment : BaseContactFragment() {
-    private val viewModel: AddContactViewModelImpl by viewModels()
+    override val viewModel: AddContactViewModelImpl by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
