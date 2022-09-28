@@ -1,4 +1,4 @@
-package com.example.contactlist.data.repository
+package com.example.contactlist.data.repository.contact
 
 import com.example.contactlist.data.database.ContactDao
 import com.example.contactlist.data.model.Contact

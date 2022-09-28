@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.contactlist.data.model.BaseItem
 import com.example.contactlist.data.model.Title
-import com.example.contactlist.data.repository.ContactRepository
+import com.example.contactlist.data.repository.contact.ContactRepository
 import com.example.contactlist.ui.base.viewModel.BaseViewModel
 import com.example.contactlist.ui.core.viewmodel.SafeApiCall
 import com.example.contactlist.ui.core.viewmodel.SafeApiCallImpl
@@ -20,7 +20,8 @@ class HomeViewModelImpl @Inject constructor(val contactRepository: ContactReposi
     private val _contacts: MutableLiveData<List<BaseItem>> = MutableLiveData()
     override val contacts: LiveData<List<BaseItem>> = _contacts
 
-    override val emptyScreen: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _emptyScreen: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val emptyScreen: LiveData<Boolean> = _emptyScreen
 
     private val _refreshFinished: MutableSharedFlow<Unit> = MutableSharedFlow()
     override val refreshFinished: SharedFlow<Unit> = _refreshFinished
@@ -34,13 +35,16 @@ class HomeViewModelImpl @Inject constructor(val contactRepository: ContactReposi
 //        getContacts()
 //    }
 
-//    fun onViewCreated() {
-//        viewModelScope.launch {
-//            _finish.emit(Unit)
-//        }
-//    }
+    fun getAllContact() {
+        viewModelScope.launch {
+            val res = contactRepository.getContacts()
+            _contacts.value = res
+            if(res == null) _emptyScreen.value = true
+            else _emptyScreen.value = false
+        }
+    }
 
-    private fun getContacts() {
+    fun getContacts() {
         viewModelScope.launch {
             _loading.emit(true)
 //            val response = contactRepository.getContacts().sortedBy { it.name.uppercase() }
@@ -68,7 +72,7 @@ class HomeViewModelImpl @Inject constructor(val contactRepository: ContactReposi
                     i++
                 }
                 _contacts.value = tempList
-                emptyScreen.value = _contacts.value.isNullOrEmpty()
+                _emptyScreen.value = _contacts.value.isNullOrEmpty()
 
 //        for(i in 1..len) {
 //            if(i % 2 == 0) {

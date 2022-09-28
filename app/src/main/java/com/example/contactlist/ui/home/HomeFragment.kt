@@ -70,6 +70,10 @@ class HomeFragment : BaseFragment(), ErrorHandler by ErrorHandlerImpl() {
         binding.fabAdd.setOnClickListener {
             navigateToAddContact()
         }
+
+        binding.tvNavigateSignUp.setOnClickListener {
+            navigateToSignUp()
+        }
     }
 
     // recycleView
@@ -113,5 +117,10 @@ class HomeFragment : BaseFragment(), ErrorHandler by ErrorHandlerImpl() {
                 viewModel.refresh()
             }
         }
+    }
+
+    fun navigateToSignUp() {
+        val action = HomeFragmentDirections.actionHomeFragmentToSignUpFragment()
+        NavHostFragment.findNavController(this).navigate(action)
     }
 }

@@ -2,8 +2,7 @@ package com.example.contactlist.ui.contact.edit.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.example.contactlist.data.model.Contact
-import com.example.contactlist.data.repository.ContactRepository
-import com.example.contactlist.data.repository.ContactRepositoryImpl
+import com.example.contactlist.data.repository.contact.ContactRepository
 import com.example.contactlist.ui.contact.base.BaseContactViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,15 +20,18 @@ class EditContactViewModelImpl @Inject constructor(val repository: ContactReposi
         }
     }
 
-    override fun update(id: Int) {
+    override fun update(id: Int): String {
         viewModelScope.launch {
             if(name.value.isNullOrEmpty() || phone.value.isNullOrEmpty()) {
                 _error.emit("Something went wrong")
+                _success.value = "Not working"
             } else {
                 val contact = Contact(id = id, name = name.value!!, phone = phone.value!!)
                 repository.updateContact(id, contact)
                 _finish.emit(Unit)
+                _success.value = "Working"
             }
         }
+        return success.value!!
     }
 }

@@ -19,5 +19,4 @@ interface ContactDao {
 
     @Query("DELETE FROM contact WHERE id = :id")
     suspend fun deleteContact(id: Int)
-
 }

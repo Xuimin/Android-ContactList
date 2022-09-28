@@ -1,5 +1,6 @@
 package com.example.contactlist.ui.contact.base
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.contactlist.ui.base.viewModel.BaseViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,4 +16,7 @@ abstract class BaseContactViewModel: BaseViewModel() {
 
     protected val _error: MutableSharedFlow<String> = MutableSharedFlow()
     val error: SharedFlow<String> = _error
+
+    protected val _success: MutableLiveData<String> = MutableLiveData()
+    val success: LiveData<String> = _success
 }

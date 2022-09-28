@@ -3,8 +3,8 @@ package com.example.contactlist.di
 import android.content.Context
 import androidx.room.Room
 import com.example.contactlist.data.database.ContactDatabase
-import com.example.contactlist.data.repository.ContactRepository
-import com.example.contactlist.data.repository.ContactRepositoryImpl
+import com.example.contactlist.data.repository.contact.ContactRepository
+import com.example.contactlist.data.repository.contact.ContactRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object ppModule {
     @Provides
     @Singleton
     fun provideContactDatabase(@ApplicationContext app: Context): ContactDatabase {
